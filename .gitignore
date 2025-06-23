@@ -18,3 +18,4 @@ __pycache__/
 
 # 편의: VSCode/IDE 설정
 .vscode/
+.DS_Store
