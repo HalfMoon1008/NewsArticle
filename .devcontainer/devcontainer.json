@@ -1,0 +1,13 @@
+{
+  "name": "News Search App Dev",
+  "dockerFile": "Dockerfile",
+  "context": "..",
+  "workspaceFolder": "/app",
+  "remoteEnv": {
+    "WANDB_API_KEY": "${localEnv:WANDB_API_KEY}"
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder}/data,target=/app/data,type=bind"
+  ],
+  "postCreateCommand": "conda activate news-env || true"
+}

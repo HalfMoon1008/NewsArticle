@@ -1,4 +1,4 @@
-name: nlp ## Conda 환경 이름
+name: news-env # Conda 환경 이름
 channels:
   - defaults
   - conda-forge
@@ -15,9 +15,11 @@ dependencies:
       - scikit-learn
 
 
-## Dockerfile이 있다면
-## docker build -t news-search-app .
-## 로 빌드 => Docker 이미지 생성
+# .devcontainer/Dockerfile이 있다면
+# docker build -t news-search-app -f Dockerfile ..
+# 로 빌드 => Docker 이미지 생성
+# 이때, environment.yml이 없으면 위와 같이 생성
+# 이후 Dockerfile의 env 이름과 environment.yml의 env 이름이 일치해야 함
 
 # | 단계 | 내용                                                      |
 # | -- | --------------------------------------------------        |
@@ -37,4 +39,13 @@ dependencies:
 # conda info --envs
 # conda activate 너가 만든 환경 이름
 
-# 3. 프로젝트 시작
+# 3. VS Code로 컨테이너 접속하기
+# Dev Containers 확장 기능을 사용하면, VS Code에서 Docker 컨테이너에 직접 접속할 수 있음
+
+# 4. (Optional) 🧪 Conda 환경 활성화
+# VS Code에서 터미널을 열고, Conda 환경이 활성화되어 있는지 확인:
+# conda activate 너가 만든 환경 이름
+
+# 5. (Optional) 🧪 Conda 환경 비활성화
+# Conda 환경을 비활성화하려면:
+# conda deactivate
