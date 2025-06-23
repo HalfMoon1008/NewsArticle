@@ -1,0 +1,40 @@
+name: nlp ## Conda 환경 이름
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - transformers
+      - sentence-transformers
+      - qdrant-client
+      - gradio
+      - wandb
+      - datasets
+      - scikit-learn
+
+
+## Dockerfile이 있다면
+## docker build -t news-search-app .
+## 로 빌드 => Docker 이미지 생성
+
+# | 단계 | 내용                                                      |
+# | -- | --------------------------------------------------        |
+# | 1  | 프로젝트 구조 기획 (파일 구조, 기술 스택, README 포함)              |
+# | 2  | `.gitignore`, `.env`, `wandb/` 등 Git 환경 설정              |
+# | 3  | GitHub 리포 연결 및 충돌 해결 (rebase 포함)                      |
+# | 4  | `Dockerfile`, `environment.yml` 작성                        |
+# | 5  | `docker build -t news-search-app .` 실행 → 이미지 생성 완료    |
+
+
+# 1. Docker 컨테이너 실행하기
+# Docker 이미지만 있는 상태라, 아직 실행은 안 됐어. 아래 명령어로 실행:
+# docker run -it --name news-search-container news-search-app /bin/bash
+
+# 2. (Optional) 🧪 Conda 환경 활성화 확인
+# 컨테이너 안에서 conda 환경이 잘 설정되었는지 확인:
+# conda info --envs
+# conda activate 너가 만든 환경 이름
+
+# 3. 프로젝트 시작
