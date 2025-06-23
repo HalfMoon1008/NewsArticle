@@ -39,9 +39,11 @@
 
 ```bash
 NewsArticle/
-├── Dockerfile                # 도커 환경 설정 파일
-├── environment.yml           # conda 환경 정의 (wandb 포함)
-├── docker-compose.yml        # (선택) Qdrant + app 컨테이너 실행
+├── .devcontainer/
+│   ├── Dockerfile            # 도커 환경 설정 파일
+│   ├── environment.yml       # conda 환경 정의 (wandb 포함)
+│   ├── docker-compose.yml    # Docker 서비스(app, qdrant 등)를 한 번에 정의하고 실행하는 설정 파일
+│   └── devcontainer.json     # 지정한 Docker 환경(Dockerfile or docker-compose.yml)을 자동으로 빌드하고 실행하게 해주는 설정
 ├── .dockerignore             # 캐시/모델/log 제외 설정
 ├── .gitignore                # wandb/, *.pt, __pycache__ 등 명시
 ├── .env                      # wandb API key, 포트, 경로 등의 환경변수 저장 (Git 무시 필수)
@@ -50,15 +52,12 @@ NewsArticle/
 │   ├── Training/             # AI Hub Train JSON
 │   ├── Validation/           # AI Hub Validation JSON
 │   └── processed/            # 청크 & metadata JSON
-│
 ├── models/
 │   ├── base_model/           # ko-sbert 초기 모델
 │   └── tuned_model/          # fine-tuned 모델 파일
-│
 ├── embeddings/
-│   ├── base_embeddings.npy   # 초기 임베딩 결과 (baseline)
-│   └── tuned_embeddings.npy  # 튜닝된 모델 기반 임베딩
-│
+│   ├── base_embeddings.npy   # 기사의 기본적인 임베딩 결과 (리소스 절약, 실험 재현성 목적)
+│   └── tuned_embeddings.npy  # 완료한 모델로 동일한 뉴스 청크들을 임베딩한 결과
 ├── tests/                    # 단위 테스트 및 통합 테스트
 │   ├── test_embed.py         # 예: 임베딩 정상 작동 확인
 │   ├── test_search.py        # 검색 정확성 테스트
@@ -66,12 +65,10 @@ NewsArticle/
 │
 ├── qdrant/
 │   └── collection_config.json
-│
 ├── wandb/                    # wandb 로컬 실험 로그 디렉토리 (.gitignore로 무시 권장)
 │   └── latest-run/
-│
 ├── notebooks/
-│   └── embedding_vs_evaluation.ipynb # 평가지표 비교 분석
+│   └── embedding_vs_evaluation.ipynb # 평가지표를 계산해 성능을 비교 분석
 │
 ├── src/
 │   ├── preprocess.py         # 데이터 파싱 + 청킹
@@ -79,11 +76,12 @@ NewsArticle/
 │   ├── search_qdrant.py      # Qdrant 연동, 검색 기능
 │   ├── rag.py                # RAG inference 코드
 │   ├── optimize.py           # LoRA/Quant/Distill/Reflexion 스크립트
-│   └── ui_app.py             # OpenWebUI / Gradio UI 서버
-│
+│   └── ui_app.py             # OpenwebUI / Gradio UI 서버
 ├── eval/
 │   ├── metrics.py            # BertScore, Recall@k, MRR 계산
 │   └── eval_results.csv
 │
+
 ├── requirements.txt
 └── README.md
+
