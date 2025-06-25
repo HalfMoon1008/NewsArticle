@@ -17,7 +17,7 @@
 
 - **데이터 전처리**: Python, pandas, json
 - **모델링 & 튜닝**: HuggingFace Transformers, ko-sbert, PEFT (LoRA)
-- **임베딩 & 검색**: SentenceTransformer, FAISS, Qdrant
+- **임베딩 & 검색**: SentenceTransformer, FAISS or Qdrant
 - **RAG**: Retrieval-Augmented Generation (LLM + 검색 결과 조합)
 - **경량화 기법**: LoRA, 8-bit Quantization, Knowledge Distillation(예정)
 - **성능 측정**: BertScore, Recall@k, MRR
@@ -85,4 +85,112 @@ NewsArticle/
 
 ├── requirements.txt
 └── README.md
+```
 
+---
+## 🛠️ 개발 환경 세팅 가이드 (for Docker + Conda)
+
+`.devcontainer/` 디렉토리를 기반으로 **Docker + Conda 환경을 자동 구성** 하는 세팅 가이드
+Docker Desktop이 설치되어 있다면, 단 한 번의 설정으로 전체 개발환경이 셋업 가능.
+
+
+```bash
+# Docker 켜기
+docker start news-search-container
+docker exec -it news-search-container bash 
+# gui가 아닌 터미널에서 도커 사용
+>> (base) root@6fc639bce2c4:/app
+
+# Conda 활성화 및 비활성화
+conda activate news-env
+>> (news-env) root@6fc639bce2c4:/app/NewsArticle
+conda deactivate 
+
+# 로컬의 작업들을 도커에 업데이트
+git add .
+docker-sync
+```
+---
+
+### 1. 사전 설치 프로그램
+
+| 도구 | 링크 |
+|------|------|
+| Docker Desktop | [https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/) |
+| Git | [https://git-scm.com/downloads](https://git-scm.com/downloads) |
+| VSCode | [https://code.visualstudio.com/](https://code.visualstudio.com/) |
+
+
+---
+
+### 2. Docker 기반 환경 자동 구성 (with VSCode)
+
+> VSCode 기준으로 가장 쉬운 방식
+
+1. `NewsArticle/` 루트 폴더를 VSCode로 열기
+2. `F1` 또는 `Ctrl + Shift + P` (`Cmd` on Mac)  
+3. `Dev Containers: Rebuild and Reopen in Container` 선택
+
+또는 Local 터미널에서
+
+```bash
+# 수동 빌드
+# 1. 이미지 빌드
+docker build -t news-search-app .devcontainer
+
+# 2. 컨테이너 생성 및 실행
+docker run -it --name news-search-container news-search-app
+```
+
+#### 구성 결과
+
+- Docker 이미지: `news-search-app`  
+- 컨테이너 이름: `news-search-container`  
+- Conda 환경: `news-env` (자동 생성)
+
+---
+
+### 3. Conda 환경 구성 방식
+
+`.devcontainer/Dockerfile`과 `environment.yml`을 통해  
+`news-env`라는 이름의 Conda 환경이 컨테이너 내에서 자동으로 생성.
+
+
+```dockerfile
+# Dockerfile 일부
+RUN conda env create -f environment.yml
+SHELL ["conda", "run", "-n", "news-env", "/bin/bash", "-c"]
+```
+
+> 이후 모든 명령어는 해당 환경 안에서 실행.
+
+---
+
+### 4. 로컬 변경 사항 컨테이너에 반영하기 (`docker-sync`)
+
+`.devcontainer/upload_changed.sh`를 사용하면,  
+`git add`된 파일만 자동으로 Docker 컨테이너 내 `/app/NewsArticle/`에 반영됨.
+
+**git status에 파일이 있어야하므로, push 전에 'docker-sync' 실행**
+
+#### 최초 1회 설정
+
+```bash
+chmod +x .devcontainer/upload_changed.sh
+alias docker-sync='./.devcontainer/upload_changed.sh'
+```
+
+#### 사용 방법
+
+```bash
+# 1. 로컬에서 변경된 파일 git add
+git add .
+
+# 2. 컨테이너에 변경 반영
+docker-sync
+```
+
+#### 자동으로 제외되는 항목
+
+- `.env`, `.envs/` 등 민감 정보 포함 파일
+- 삭제된 파일 및 이름 변경 파일도 반영됨
