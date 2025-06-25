@@ -43,7 +43,8 @@ NewsArticle/
 │   ├── Dockerfile            # 도커 환경 설정 파일
 │   ├── environment.yml       # conda 환경 정의 (wandb 포함)
 │   ├── docker-compose.yml    # Docker 서비스(app, qdrant 등)를 한 번에 정의하고 실행하는 설정 파일
-│   └── devcontainer.json     # 지정한 Docker 환경(Dockerfile or docker-compose.yml)을 자동으로 빌드하고 실행하게 해주는 설정
+│   ├── devcontainer.json     # 지정한 Docker 환경(Dockerfile or docker-compose.yml)을 자동으로 빌드하고 실행하게 해주는 설정
+│   └── upload_changed.sh     # 로컬에서 git을 하고난 뒤, 'docker-sync'를 통해 자동으로 도커에 업데이트하는 파일 // 해당 파일에 사용법 작성 완료
 ├── .dockerignore             # 캐시/모델/log 제외 설정
 ├── .gitignore                # wandb/, *.pt, __pycache__ 등 명시
 ├── .env                      # wandb API key, 포트, 경로 등의 환경변수 저장 (Git 무시 필수)
