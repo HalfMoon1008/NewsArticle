@@ -49,7 +49,8 @@ NewsArticle/
 ├── .gitignore                # wandb/, *.pt, __pycache__ 등 명시
 ├── .env                      # wandb API key, 포트, 경로 등의 환경변수 저장 (Git 무시 필수)
 │
-├── data/
+├── data/ 
+│   ├── [데이터 명세서 보기](data/README.md)
 │   ├── Training/             # AI Hub Train JSON
 │   ├── Validation/           # AI Hub Validation JSON
 │   └── processed/            # 청크 & metadata JSON
@@ -86,6 +87,8 @@ NewsArticle/
 └── README.md
 ```
 
+뉴스 QA 데이터셋 구조 및 필드 설명 추가
+
 ---
 ## 🛠️ 개발 환경 세팅 가이드 (for Docker + Conda)
 
@@ -97,6 +100,10 @@ Docker Desktop이 설치되어 있다면, 단 한 번의 설정으로 전체 개
 # Docker 켜기
 docker start news-search-container
 docker exec -it news-search-container bash 
+
+# Docker 끄기
+(base) root@6fc639bce2c4:/app/NewsArticle/.devcontainer# exit
+docker stop news-search-container
 
 # gui가 아닌 터미널에서 도커 사용
 >> (base) root@6fc639bce2c4:/app

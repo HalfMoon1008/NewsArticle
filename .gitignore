@@ -1,6 +1,7 @@
 
 # Data Set 무시
-data/
+data/Training/
+data/Validation/
 
 # wandb 실험 로그 무시
 wandb/
