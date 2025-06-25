@@ -50,7 +50,6 @@ NewsArticle/
 ├── .env                      # wandb API key, 포트, 경로 등의 환경변수 저장 (Git 무시 필수)
 │
 ├── data/ 
-│   ├── [데이터 명세서 보기](data/README.md)
 │   ├── Training/             # AI Hub Train JSON
 │   ├── Validation/           # AI Hub Validation JSON
 │   └── processed/            # 청크 & metadata JSON
