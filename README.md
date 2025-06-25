@@ -82,7 +82,6 @@ NewsArticle/
 │   ├── metrics.py            # BertScore, Recall@k, MRR 계산
 │   └── eval_results.csv
 │
-
 ├── requirements.txt
 └── README.md
 ```
@@ -98,6 +97,7 @@ Docker Desktop이 설치되어 있다면, 단 한 번의 설정으로 전체 개
 # Docker 켜기
 docker start news-search-container
 docker exec -it news-search-container bash 
+
 # gui가 아닌 터미널에서 도커 사용
 >> (base) root@6fc639bce2c4:/app
 
@@ -108,7 +108,7 @@ conda deactivate
 
 # 로컬의 작업들을 도커에 업데이트
 git add .
-docker-sync
+docker-sync # git push 전에 할 것. git status에 있어야 함
 ```
 ---
 
